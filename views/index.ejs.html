@@ -1,0 +1,219 @@
+<html>
+<head>
+  <title>Story Parser</title>
+  <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+  <script src="javascripts/angularApp.js"></script>
+  <style> .glyphicon-thumbs-up { cursor:pointer } </style>
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    }
+  </style>
+</head>
+<body ng-app="flapperNews">
+  <nav class="navbar navbar-inverse" ng-controller="NavCtrl" style="background-color: #000;">
+  <div class="container-fluid">
+  <div class="navbar-header">
+      <a class="navbar-brand" href="#">Story Parser</a>
+    </div>
+   <div class="collapse navbar-collapse" id="myNavbar">
+    <ul class="nav navbar-nav navbar-right" style="color: #FFF;">
+      <li ng-show="isLoggedIn()"><a><span class="glyphicon glyphicon-user"></span> {{ currentUser() }}</a></li>
+      <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+      <li ng-hide="isLoggedIn()"><a href="/#/login"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
+      <li ng-hide="isLoggedIn()"><a href="/#/register"><span class="glyphicon glyphicon-edit"></span> Sign Up</a></li>
+    </ul>
+    </div>
+    </div>
+  </nav>
+  
+    <div class="container" style="width: 100%; padding: 0;background-color: #000;">
+      <ui-view></ui-view>
+    </div>
+
+  <script type="text/ng-template" id="/home.html">
+    <div class="container text-center" style="width: 100%;border-radius: 0;background-color: #D2F6EB;">
+      <br>
+      <h1 style="font-size:100px;">Story Parser</h1>
+      <br>
+
+      <p>Come! Join us write some stories...</p>
+      <br>
+      <br>
+
+      </div>
+    </div>
+    <div class="container text-center" style=" width: 100%; padding: 0; background-color: #f6fceb">
+    <h1 style="text-align: center;"> Pick A Story To Add To</h1>
+  <div class="container text-left" style="padding-left: 35%; ">
+    <div ng-repeat="story in stories | orderBy: '-upvotes'">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+      <span style="font-size:20px;margin-left:10px">
+        <a href="#/stories/{{story._id}}">
+          {{story.title}}
+        </a>
+
+        
+		<span ng-show="story.author">
+		  storyed by <a>{{story.author}}</a> |
+		</span>      
+	 </span>
+     
+    </div>
+<br>
+    </div>
+    <div class="container text-center" style=" width: 100%; padding: 0; background-color: #d6dfc2" >
+    <h1> Create Your Own Story</h1>
+    <div class="container text-center" style="width: 40%; " >
+    <form ng-submit="addStory()" ng-show="isLoggedIn()" style="margin-top:10px">
+
+      <div class="form-group"><div class="input-group">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+        <input type="text" class="form-control" placeholder="Story Title"  ng-model="title"></div>
+      </div>
+
+      <div class="form-group"><div class="input-group">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+        <input type="text" class="form-control" placeholder="Story Description" ng-model="link"></div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+	<div ng-hide="isLoggedIn()">
+	  <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Sign Up</a> before you can create a story.</h3>
+	</div>
+  </div>
+  </div>
+  </script>
+
+  <script type="text/ng-template" id="/stories.html">
+  <div class="container text-center" style=" width: 100%; padding: 0; background-color: #d6dfc2" >
+      <h1>
+          {{story.title}}
+      </h1>
+      <h4>Description:
+          {{story.description}}
+          </h4>
+    </div>
+<div class="container text-center" style=" width: 100%; padding: 0; background-color: #d3f" >
+    <br>
+    <p style="font-size:25px;"> So here is the story so far...</p> 
+    <div ng-repeat="line in story.lines " style=" margin-left: 40px;margin-right: 40px;">
+      <span style="font-size:20px; margin:10px;">
+        {{line.body}}
+      </span>
+
+    </div>
+    <br>
+    </div>
+<div class="container text-center" style=" width: 100%; padding: 0; background-color: #d6dfc2" >
+<h3>Add a new line to make the story more interesting </h3>
+<p style="color: #d63">Warning: You can only add 50 character per line, so choose your words carefully </p>
+<div class="container text-center" style=" width: 40%; padding: 0; background-color: #d6dfc2" >
+    <form ng-submit="addLine()" ng-show="isLoggedIn()" >
+      
+
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Once apon a time..." maxlength=50 ng-model="body"></input>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+
+    <div ng-hide="isLoggedIn()">
+	  <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can line.</h3>
+	</div>
+  </div>
+  </div>
+  </script>
+  
+  <script type="text/ng-template" id="/register.html">
+	  <div class="container text-center" style="width: 100%;border-radius: 0;background-color: #D2F6EB;">
+      <br>
+      <h1 style="font-size:100px;">Story Parser</h1>
+      <br>
+      <p>Come! Join us write some stories...</p>
+    <br>
+    </div>
+  <div class="container text-center" style=" width: 100%; padding: 0; background-color: #d6dfc2" >
+	  <div ng-show="error" class="alert alert-danger row">
+	    <span>{{ error.message }}</span>
+	  </div>
+	
+	  <form ng-submit="register()"
+	    style="margin-top:30px;">
+	    <h1>Sign Up</h1>
+	<div class="container text-center" style=" width: 40%; padding: 0; background-color: #d6dfc2" >
+	    <div class="form-group"><div class="input-group">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+	      <input type="text"
+	      class="form-control"
+	      placeholder="Username"
+	      ng-model="user.username"></input></div>
+	    </div>
+	    <div class="form-group">
+      <div class="input-group">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+	      <input type="password"
+	      class="form-control"
+	      placeholder="Password"
+	      ng-model="user.password"></input></div>
+	    </div>
+
+	    <button type="submit" class="btn btn-primary">Sign Up</button>
+      </div>
+	  </form>
+
+    </div>
+	</script>
+
+
+	<script type="text/ng-template" id="/login.html">
+	  <div class="container text-center" style="width: 100%;border-radius: 0;background-color: #D2F6EB;">
+      <br>
+	    <h1 style="font-size:100px;">Story Parser</h1>
+      <br>
+      <p>Come! Join us write some stories...</p>
+	  <br>
+    </div>
+<div class="container text-center" style=" width: 100%; padding: 0; background-color: #d6dfc2" >
+	  <div ng-show="error" class="alert alert-danger row">
+	    <span>{{ error.message }}</span>
+	  </div>
+	
+	  <form ng-submit="logIn()"
+	    style="margin-top:30px;">
+	    <h3>Log In</h3>
+	<div class="container text-center" style=" width: 40%; padding: 0; background-color: #d6dfc2" >
+	    <div class="form-group">
+      <div class="input-group">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+	      <input type="text"
+	      class="form-control"
+	      placeholder="Username"
+	      ng-model="user.username"></input></div>
+	    </div>
+	    <div class="form-group">
+      <div class="input-group">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+	      <input type="password"
+	      class="form-control"
+	      placeholder="Password"
+	      ng-model="user.password"></input></div>
+	    </div>
+	    <button type="submit" class="btn btn-primary">Log In</button>
+	  </form>
+    </div>
+    </div>
+
+  </script>					  
+
+  </body>
+</html>
