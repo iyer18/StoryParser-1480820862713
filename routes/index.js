@@ -26,7 +26,7 @@ router.get('/stories', function(req, res, next) {
   });
 });
 
-router.story('/stories', auth, function(req, res, next) {
+router.post('/stories', auth, function(req, res, next) {
   var story = new Story(req.body);
   story.author = req.payload.username;
 
@@ -83,7 +83,7 @@ router.put('/stories/:story/downvote', auth, function(req, res, next) {
   });
 });
 
-router.story('/stories/:story/lines', auth, function(req, res, next) {
+router.post('/stories/:story/lines', auth, function(req, res, next) {
   var line = new Line(req.body);
   line.story = req.story;
   line.author = req.payload.username;
@@ -116,7 +116,7 @@ router.put('/stories/:story/lines/:line/downvote', auth, function(req, res, next
   });
 });
 
-router.story('/register', function(req, res, next){
+router.post('/register', function(req, res, next){
   if(!req.body.username || !req.body.password){
     return res.status(400).json({message: 'Please fill out all fields'});
   }
@@ -136,7 +136,7 @@ router.story('/register', function(req, res, next){
   });
 });
 
-router.story('/login', function(req, res, next){
+router.post('/login', function(req, res, next){
   if(!req.body.username || !req.body.password){
     return res.status(400).json({message: 'Please fill out all fields'});
   }

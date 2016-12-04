@@ -6,4 +6,4 @@ var LineSchema = new mongoose.Schema({
   story: { type: mongoose.Schema.Types.ObjectId, ref: 'Story' }
 });
 
-mongoose.model('Line', CommentSchema);
+mongoose.model('Line', LineSchema);

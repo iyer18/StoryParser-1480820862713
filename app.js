@@ -21,7 +21,7 @@ var app = express();
 
 // connect MongoDB
 //mongoose.connect('mongodb://a084c80d-a0dc-4b9a-8416-21dae9f1ba86:5de4be26-2a8a-4fc0-9d7e-198a1bb70f85@23.246.199.101:10079/db', function(err,db){
- mongoose.connect('mongodb://localhost/db', function(err,db){
+ mongoose.connect('mongodb://localhost/news', function(err,db){
     if (!err){
         console.log('Connected to host!');
     } else{
@@ -32,7 +32,7 @@ var app = express();
 require('./models/Stories');
 require('./models/Lines');
 require('./models/Users');
-require('.passport');
+require('./passport');
 // Set up access to js files
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -55,14 +55,17 @@ app.use(express.static(__dirname + '/public'));
 // get the app environment from Cloud Foundry
 var appEnv = cfenv.getAppEnv();
 
-
-// catch 404 and forward to error handler
+ // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
+
+// error handlers
+
 // development error handler
+// will print stacktrace
 if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
         res.status(err.status || 500);
@@ -72,6 +75,9 @@ if (app.get('env') === 'development') {
         });
     });
 }
+
+// production error handler
+// no stacktraces leaked to user
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
@@ -79,6 +85,7 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
+
 
 // start server on the specified port and binding host
 app.listen(appEnv.port, '0.0.0.0', function() {
