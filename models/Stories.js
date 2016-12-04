@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var StorySchema = new mongoose.Schema({
   title: String,
-  Description: String,
+  description: String,
   lines: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Line' }]
 });
 
