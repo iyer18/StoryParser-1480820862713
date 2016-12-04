@@ -31,7 +31,7 @@ mongoose.connect('mongodb://a084c80d-a0dc-4b9a-8416-21dae9f1ba86:5de4be26-2a8a-4
 require('./models/Stories');
 require('./models/Lines');
 require('./models/Users');
-require('./config/passport');
+require('.passport');
 // Set up access to js files
 var routes = require('./routes/index');
 var users = require('./routes/users');
