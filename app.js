@@ -20,8 +20,8 @@ var app = express();
 
 
 // connect MongoDB
-//mongoose.connect('mongodb://a084c80d-a0dc-4b9a-8416-21dae9f1ba86:5de4be26-2a8a-4fc0-9d7e-198a1bb70f85@23.246.199.101:10079/db', function(err,db){
- mongoose.connect('mongodb://localhost/news', function(err,db){
+mongoose.connect('mongodb://a084c80d-a0dc-4b9a-8416-21dae9f1ba86:5de4be26-2a8a-4fc0-9d7e-198a1bb70f85@23.246.199.101:10079/db', function(err,db){
+ //mongoose.connect('mongodb://localhost/', function(err,db){
     if (!err){
         console.log('Connected to host!');
     } else{
