@@ -21,14 +21,14 @@
   <nav class="navbar navbar-inverse" ng-controller="NavCtrl" style="background-color: #4484CE;">
   <div class="container-fluid">
   <div class="navbar-header">
-      <a class="navbar-brand" href="#">Story Parser</a>
+      <a class="navbar-brand" href="#" style="color: #fff;">Story Parser</a>
     </div>
    <div class="collapse navbar-collapse" id="myNavbar">
-    <ul class="nav navbar-nav navbar-right" style="color: #FFF;">
-      <li ng-show="isLoggedIn()"><a><span class="glyphicon glyphicon-user"></span> {{ currentUser() }}</a></li>
-      <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
-      <li ng-hide="isLoggedIn()"><a href="/#/login"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
-      <li ng-hide="isLoggedIn()"><a href="/#/register"><span class="glyphicon glyphicon-edit"></span> Sign Up</a></li>
+    <ul class="nav navbar-nav navbar-right" >
+      <li ng-show="isLoggedIn()"><a style="color: #fff;"><span class="glyphicon glyphicon-user"></span> {{ currentUser() }}</a></li>
+      <li ng-show="isLoggedIn()"><a style="color: #fff;" href="" ng-click="logOut()"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+      <li ng-hide="isLoggedIn()"><a style="color: #fff;" href="/#/login"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
+      <li ng-hide="isLoggedIn()"><a style="color: #fff;" href="/#/register"><span class="glyphicon glyphicon-edit"></span> Sign Up</a></li>
     </ul>
     </div>
     </div>
