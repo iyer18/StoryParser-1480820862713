@@ -53,7 +53,7 @@
     <div class="container text-center" style=" width: 100%; padding: 0; background-color: #F9CF00">
     <h1 style="text-align: center;"> Pick A Story To Add To</h1>
   <div class="container text-left" style="padding-left: 35%; ">
-    <div ng-repeat="story in stories | orderBy: '-upvotes'">
+    <div ng-repeat="story in stories ">
       <span class="glyphicon glyphicon-chevron-right"></span>
       <span style="font-size:20px;margin-left:10px">
         <a href="#/stories/{{story._id}}">
@@ -81,7 +81,7 @@
 
       <div class="form-group"><div class="input-group">
       <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-        <input type="text" class="form-control" placeholder="Story Description" ng-model="link"></div>
+        <input type="text" class="form-control" placeholder="Story Description" ng-model="description"></div>
       </div>
 
       <button type="submit" class="btn btn-primary">Create</button>
@@ -98,7 +98,7 @@
       <h1>
           {{story.title}}
       </h1>
-      <h4>Description:{{story.Description}}
+      <h4>Description:{{story.description}}
           </h4>
     </div>
 <div class="container text-center" style=" width: 100%; padding: 0; background-color: #F9CF00" >

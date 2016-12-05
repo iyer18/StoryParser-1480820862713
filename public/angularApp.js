@@ -128,21 +128,7 @@ function($http, auth) {
 	  });
 	};
 	
-	o.upvote = function(story) {
-	  return $http.put('/stories/' + story._id + '/upvote', null, {
-	    headers: {Authorization: 'Bearer '+auth.getToken()}
-	  }).success(function(data){
-	    story.upvotes += 1;
-	  });
-	};
-	//downvotes
-	o.downvote = function(story) {
-	  return $http.put('/stories/' + story._id + '/downvote', null, {
-	    headers: {Authorization: 'Bearer '+auth.getToken()}
-	  }).success(function(data){
-	    story.upvotes -= 1;
-	  });
-	};
+	
 	//grab a single story from the server
 	o.get = function(id) {
 		//use the express route to grab this story and return the response
@@ -160,22 +146,7 @@ function($http, auth) {
 	  });
 	};
 	
-	o.upvoteLine = function(story, line) {
-	  return $http.put('/stories/' + story._id + '/lines/'+ line._id + '/upvote', null, {
-	    headers: {Authorization: 'Bearer '+auth.getToken()}
-	  }).success(function(data){
-	    line.upvotes += 1;
-	  });
-	};	
-	//downvote lines
-	//I should really consolidate these into one voteHandler function
-	o.downvoteLine = function(story, line) {
-	  return $http.put('/stories/' + story._id + '/lines/'+ line._id + '/downvote', null, {
-	    headers: {Authorization: 'Bearer '+auth.getToken()}
-	  }).success(function(data){
-	    line.upvotes -= 1;
-	  });
-	};	
+	
 	return o;
 }]);
 
@@ -194,22 +165,13 @@ function($scope, stories, auth) {
 		}
 		stories.create({
 			title : $scope.title,
-			Description: $scope.Description,
+			description: $scope.description,
 		});
 		//clear the values
 		$scope.title = '';
-		$scope.Description = '';
+		$scope.description = '';
 	};
 
-	$scope.upvote = function(story) {
-		//our story factory has an upvote() function in it
-		//we're just calling this using the story we have
-		console.log('Upvoting:' + story.title + "votes before:" + story.upvotes);
-		stories.upvote(story);
-	};
-	$scope.downvote = function(story) {
-		stories.downvote(story);
-	};
 }]);
 
 app.controller('StoriesCtrl', ['$scope', 'stories', 'story', 'auth',
@@ -228,13 +190,6 @@ function($scope, stories, story, auth) {
 			$scope.story.lines.push(line);
 		});
 		$scope.body = '';
-	};
-	$scope.upvote = function(line) {
-		stories.upvoteLine(story, line);
-	};
-
-	$scope.downvote = function(line) {
-		stories.downvoteLine(story, line);
 	};
 
 }]);
