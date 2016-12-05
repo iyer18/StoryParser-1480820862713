@@ -194,11 +194,11 @@ function($scope, stories, auth) {
 		}
 		stories.create({
 			title : $scope.title,
-			link : $scope.link,
+			Description: $scope.Description,
 		});
 		//clear the values
 		$scope.title = '';
-		$scope.link = '';
+		$scope.Description = '';
 	};
 
 	$scope.upvote = function(story) {
